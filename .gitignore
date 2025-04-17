@@ -19,6 +19,11 @@
 *.log
 *.sql
 *.sqlite
+*.csv
+agoge/logs/* 
+run.*
+compare.*
+build.*
 
 # OS generated files
 .DS_Store
@@ -89,6 +94,7 @@ agoge/build/*
 
 # HDF5 output
 *.h5
+*.out
 
 # binary
 agoge_run
