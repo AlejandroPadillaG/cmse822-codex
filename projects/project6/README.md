@@ -7,6 +7,7 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
 ## 1. OpenMP Parallelism in EulerSolver
 
 ### 1.1. CPU Parallelism
+
 - **Task:** Add OpenMP parallel regions to the core computational loops in `agoge/src/EulerSolver.cpp`.
 - **Reference:** Focus on the main update and flux calculation routines. Use `#pragma omp parallel for` to parallelize outer loops over grid cells.
 - **Hints:**
@@ -15,6 +16,7 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Test with different thread counts (set via `OMP_NUM_THREADS`).
 
 ### 1.2. GPU Offload (OpenMP Target)
+
 - **Task:** Implement OpenMP target offload for the same routines, enabling execution on GPUs.
 - **Reference:** Use `#pragma omp target teams distribute parallel for` in `EulerSolver.cpp`.
 - **Hints:**
@@ -23,16 +25,16 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Use OpenMP device selection and offload environment variables.
 
 ### 1.3. Code Organization
+
 - **Task:** Use preprocessor macros or CMake options to enable/disable OpenMP and GPU offload code paths.
 - **Reference:** Update `agoge/src/EulerSolver.cpp` and `agoge/include/agoge/EulerSolver.hpp` as needed.
 - **Hints:**
   - Guard OpenMP code with `#ifdef _OPENMP`.
   - Provide a serial fallback for environments without OpenMP.
 
-
 ## 2. Correctness Testing
 
-- **Task:** Ensure all parallel versions produce correct results.
+- **Task:** Ensure all parallel versions produce correct results by comparing to the serial output.
 - **Reference:** Use existing test problems in `agoge/problems/` (e.g., `SodShockTube`).
 - **Hints:**
   - Compare output fields (density, momentum, energy) between serial, OpenMP CPU, and GPU runs.
@@ -41,6 +43,7 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
 ## 3. Performance Analysis
 
 ### 3.1. Strong and Weak Scaling Studies
+
 - **Task:** Measure and analyze performance for both strong and weak scaling.
 - **Reference:**
   - Use the performance report printed by Agoge (timing of major routines).
@@ -51,6 +54,7 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Record wall-clock times and compute zone-updates per second.
 
 ### 3.2. Parallel Efficiency
+
 - **Task:** Compute and report parallel efficiency for all configurations.
 - **Formula:**
   - Efficiency = (Speedup) / (Number of threads/GPUs)
@@ -60,12 +64,14 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Discuss any bottlenecks or scaling limitations observed.
 
 ### 3.3. CPU vs. GPU Comparison
+
 - **Task:** Compare performance between CPU and GPU runs.
 - **Reference:**
   - Use the same problem and grid size for both runs.
   - Analyze and discuss the results.
 
 ### 3.4. Multi-node and Multi-GPU Runs
+
 - **Task:** Run Agoge on multiple nodes and/or with multiple GPUs per node.
 - **Reference:**
   - Use MPI for distributed memory parallelism (see `agoge/src/main.cpp` and `agoge/include/agoge/Field3d.hpp`).
@@ -74,8 +80,6 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Document your job submission scripts and environment settings.
   - Report any issues or special considerations for multi-node/multi-GPU execution.
 
-
-
 ## 4. Bonus: OpenMP in GravitySolver
 
 - **Task:** Add OpenMP parallelism to `agoge/src/GravitySolver.cpp`.
@@ -83,31 +87,22 @@ In this project, you will extend the Agoge codebase to implement hybrid parallel
   - Focus on FFT and Poisson solve routines.
   - Use OpenMP to parallelize over independent grid slices or dimensions.
 - **Hints:**
-  - Ensure thread safety of any third-party libraries (e.g., FFTW).
   - Test for correctness and performance as above.
-
-
 
 ## 5. Documentation and Submission
 
-- **Task:** Document all code changes with Doxygen comments and inline explanations.
+- **Task:** Document all code changes with comments and inline explanations.
 - **Reference:**
   - Follow the coding standards in `docs/codingStandards.md`.
-  - Update or create a `REPORT.md` summarizing your methodology, results, and conclusions.
+  - Create a `REPORT.md` summarizing your methodology, results, and conclusions following the guidelines [here](https://cmse822.github.io/projects).
 - **Hints:**
   - Include plots/tables of scaling and efficiency results.
   - Clearly state which Agoge code files you modified.
   - Submit your code and report via GitHub as instructed.
 
-
-
 ## 6. Additional Notes
 
 - Use the MSU HPCC for all runs. Document the node types and modules used.
-- If you encounter issues with OpenMP or GPU offload, consult the Agoge Slack/Discussion board or course staff.
+- If you encounter issues with OpenMP or GPU offload, consult the GitHub Discussion board or course instructors.
 - For visualization, use scripts in `agoge/viz/` or your own tools.
-- For extra credit, optimize and document OpenMP parallelism in the GravitySolver.
 
-
-
-**Good luck! May your parallel code be correct and your speedups be superlinear!**
