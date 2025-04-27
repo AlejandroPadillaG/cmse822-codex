@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
-# -------------------------------------------------------------------------
-# Benchmark driver for serial (CPU), OpenMP, and MPI+OpenMP variants
-# using NVHPC for single‐rank builds and GNU mpicxx for the hybrid build.
-#
-# Produces sl_bench.csv with columns:
-#    Ranks,Nx,Variant,Time_s
-# -------------------------------------------------------------------------
-module load NVHPC/23.7-CUDA-12.1.1     # adjust for your cluster
 
+module load NVHPC/23.7-CUDA-12.1.1
 set -euo pipefail
 
 # ------------ user tunables -------------------------------------------------
-SIZES=(16 32 64 128 256 512 1024 2048 4096)   # for example; strong‐scaling sizes
-RANKS=(1 2 4 8 16)          # numbers of MPI ranks to test
+SIZES=(16 32 64 128 256 512 1024 2048 4096)
+RANKS=(1 2 4 8 16)
 CSV="sl_bench.csv"
 NVC="nvc++"
 TIMEOUT=1200
@@ -43,7 +36,7 @@ mpicxx $CXXFLAGS -fopenmp       $MPI_SRC    $COMMON_SRC -o $MPI_EXE
 echo "[build] done."
 # ----------------------------------------------------------------------------
 
-export OMP_NUM_THREADS=1         # serial/OpenMP each on 1 rank
+export OMP_NUM_THREADS=1
 regex='runtime[[:space:]]*=[[:space:]]*([0-9eE.+-]+)'
 
 run_case () {
@@ -51,7 +44,7 @@ run_case () {
     local exe=$2
     local variant=$3
     local nx=$4
-    local extra_arg=${5-}          # default = empty
+    local extra_arg=${5-}
     printf "[run] %-3s Ranks=%-2d Nx=%-5d … " \
            "$variant" "$ranks" "$nx"
 
